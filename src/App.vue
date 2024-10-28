@@ -11,12 +11,16 @@ import ModalFilter from './components/ModalFilter.vue'
 import { useCleanURL } from './composables/useCleanURL'
 import { useFilterStore } from './stores/filter'
 import DataTable from './components/DataTable.vue'
+import { useDateFormat } from './composables/useDateFormat'
+import { format } from 'date-fns'
 
+const { formatToSubmit } = useDateFormat()
+const { orderValue } = useColumnStore()
+const { updateEndDate, updateStartDate, updateIdTMS, updateLicensePlate, updatedivisionId } = useFilterStore()
 const token = import.meta.env.VITE_TOKEN
 const baseURL = import.meta.env.VITE_BASEURL
 const modalConfig = ref(false)
 const modalHodometer = ref(false)
-const { orderValue } = useColumnStore()
 const orderList = ref(orderValue)
 const items = ref<VehicleTracking[]>([])
 const loading = ref<boolean>(true)
@@ -75,14 +79,14 @@ const filterData = async (data: FilterFields) => {
   updatePage(1)
   await requestData({
     ...data,
-    page: 1, // toda filtragem reinicia a paginação
+    page: 1,
     rows: itemsPerPage.value,
   })
 }
 
 onMounted(() => requestData({
-  startDate: start,
-  endDate: end,
+  startDate: formatToSubmit(start, false),
+  endDate: formatToSubmit(end, true),
   licensePlate: licensePlateRef.length ? [licensePlateRef] : [],
   idTms: idTMSRef.length ? [idTMSRef] : [],
   divisionId: divisionIdRef.length ? divisionIdRef : [],
@@ -90,12 +94,27 @@ onMounted(() => requestData({
   rows: itemsPerPage.value
 }))
 
+const resetValues = async () => {
+  updatePage(1)
+  updatePerPage(10)
+  updatedivisionId([])
+  updateLicensePlate('')
+  updateIdTMS('')
+  updateEndDate(format(new Date(), 'yyyy-MM-dd'))
+  updateStartDate(format(new Date(), 'yyyy-MM-dd'))
+  await requestData({
+    page: 1,
+    rows: 10
+  })
+}
+
 </script>
 <template>
   <Header />
   <Filter 
     @config="openConfig" 
-    @hodometer="openHodometer" />
+    @hodometer="openHodometer"
+    @reset="resetValues" />
   <DataTable 
     :headers="orderList"
     :page

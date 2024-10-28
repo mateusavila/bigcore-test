@@ -4,11 +4,11 @@ import CardTitle from './CardTitle.vue'
 import CloseModal from './CloseModal.vue'
 import { useFilterStore } from '../stores/filter'
 import { FilterFields } from '../types'
-import { endOfDay, startOfDay, format, parseISO } from 'date-fns'
-import { toZonedTime } from 'date-fns-tz'
+import { useDateFormat } from '../composables/useDateFormat'
 
 const open = defineModel<boolean>('open')
 const { divisions, start, end, updateStartDate, updateEndDate, divisionIdRef, licensePlateRef, idTMSRef, updateIdTMS, updateLicensePlate, updatedivisionId } = useFilterStore()
+const { formatToSubmit } = useDateFormat()
 
 const idTms = ref(idTMSRef)
 const startDate = ref(start)
@@ -20,18 +20,11 @@ const emit = defineEmits<{
   filter: [data: FilterFields]
 }>()
 
-const formatDateToUTC = (date: Date) => {
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-  return toZonedTime(date, timeZone)
-}
-
 const closeModal = () => {
-  const startDateTime = startOfDay(parseISO(startDate.value))
-  const endDateTime = endOfDay(parseISO(endDate.value))
   
   const data = {
-    startDate: format(formatDateToUTC(startDateTime), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
-    endDate: format(formatDateToUTC(endDateTime), "yyyy-MM-dd'T'HH:mm:ss'Z'"),
+    startDate: formatToSubmit(startDate.value, false),
+    endDate: formatToSubmit(endDate.value, true),
     divisionId: divisionId.value.length ? toRaw(divisionId.value) : [],
     licensePlate: licensePlate.value.length ? [licensePlate.value] : [],
     idTms: idTms.value.length ? [idTms.value] : []

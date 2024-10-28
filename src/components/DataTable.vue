@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useDateFormat } from '../composables/useDateFormat'
-import { VehicleTracking } from '../types'
+import { Connectors, VehicleTracking } from '../types'
 
 const { formatDate } = useDateFormat()
 defineProps<{
@@ -19,6 +20,24 @@ const emit = defineEmits<{
 
 const updatePageAction = (page: number) => emit("page", page)
 const updatePerPageAction = (perPage: number) => emit("perPage", perPage)
+
+const connectors = ref<Connectors[]>([
+  {
+    title: 'Omnilink',
+    url: '/public/omnilink.png',
+    width: 60
+  },
+  {
+    title: 'Creare',
+    url: '/public/creare.png',
+    width: 50
+  },
+  {
+    title: 'Questar',
+    url: '/public/questar.webp',
+    width: 55
+  }
+])
 </script>
 
 <template>
@@ -92,43 +111,17 @@ const updatePerPageAction = (perPage: number) => emit("perPage", perPage)
         </template>
         <template #item.connector="{ item }">
           <td>
-            <template v-if="item.connector === 'omnilink'">
+            <template v-if="connectors.filter((connector) => connector.title.toLowerCase() === item.connector)">
               <v-tooltip 
-                text="Omnilink"
+                v-for="{ title, url, width }, index in connectors" :key="index"
+                :text="title"
                 location="top">
                 <template v-slot:activator="{ props }">
                   <v-img
                     v-bind="props"
-                    :width="60"
-                    alt="Omnilink"
-                    src="/public/omnilink.png" />
-                </template>
-              </v-tooltip>
-            </template>
-            <template v-else-if="item.connector === 'creare'">
-              <v-tooltip 
-                text="Creare" 
-                location="top">
-                <template v-slot:activator="{ props }">
-                  <v-img
-                    v-bind="props"
-                    :width="50"
-                    alt="Creare"
-                    src="/public/creare.png" />
-                </template>
-              </v-tooltip>
-            </template>
-            <template v-else-if="item.connector === 'questar'">
-              <v-tooltip 
-                text="Questar" 
-                location="top">
-                <template v-slot:activator="{ props }">
-                  <v-img
-                    v-bind="props"
-                    :width="55"
-                    cover
-                    alt="Questar"
-                    src="/public/questar.webp" />
+                    :width
+                    :alt="title"
+                    :src="url" />
                 </template>
               </v-tooltip>
             </template>

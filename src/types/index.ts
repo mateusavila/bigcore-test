@@ -80,3 +80,9 @@ export interface OptionsRoute {
   endDate?: string | null
   startDate?: string | null
 }
+
+export interface Connectors {
+  title: string
+  url: string
+  width: number
+}

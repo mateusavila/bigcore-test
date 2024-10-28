@@ -10,5 +10,10 @@ export default defineConfig({
     coverage: {
       provider: 'v8' // or 'v8'
     },
+    server: {
+      deps: {
+        inline: ['vuetify'],
+      },
+    },
   },
 })

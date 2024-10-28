@@ -112,18 +112,20 @@ const connectors = ref<Connectors[]>([
         <template #item.connector="{ item }">
           <td>
             <template v-if="connectors.filter((connector) => connector.title.toLowerCase() === item.connector)">
-              <v-tooltip 
-                v-for="{ title, url, width }, index in connectors" :key="index"
-                :text="title"
-                location="top">
-                <template v-slot:activator="{ props }">
-                  <v-img
+              <span v-for="{ title, url, width }, index in connectors" :key="index">
+                <v-tooltip 
+                  v-if="item.connector === title.toLowerCase()"
+                  :text="title"
+                  location="top">
+                  <template v-slot:activator="{ props }">
+                    <v-img
                     v-bind="props"
                     :width
                     :alt="title"
                     :src="url" />
-                </template>
-              </v-tooltip>
+                  </template>
+                </v-tooltip>
+              </span>
             </template>
             <template v-else>
               <v-chip  

@@ -158,7 +158,7 @@ export const useColumnStore = defineStore('columns', () => {
   const orderValue = ref<ColumnsVehicles[]>(columns.value)
 
   const updateColumns = (columns: ColumnsVehicles[]) => allColumnsList.value = columns
-  const updateOrderValue = (columns: ColumnsVehicles[]) => orderValue.value = columns
+  const updateOrderValue = (columns: ColumnsVehicles[]) => orderValue.value = [...columns]
 
   return { columns, allColumnsList, selectedColumns, updateColumns, updateOrderValue, orderValue }
 }, {

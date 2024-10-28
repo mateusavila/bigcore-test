@@ -13,6 +13,7 @@ import { useFilterStore } from './stores/filter'
 import DataTable from './components/DataTable.vue'
 import { useDateFormat } from './composables/useDateFormat'
 import { format } from 'date-fns'
+import ErrorModal from './components/ErrorModal.vue'
 
 const { formatToSubmit } = useDateFormat()
 const { orderValue } = useColumnStore()
@@ -20,6 +21,7 @@ const { updateEndDate, updateStartDate, updateIdTMS, updateLicensePlate, updated
 const token = import.meta.env.VITE_TOKEN
 const baseURL = import.meta.env.VITE_BASEURL
 const modalConfig = ref(false)
+const errorModal = ref(false)
 const modalHodometer = ref(false)
 const orderList = ref(orderValue)
 const items = ref<VehicleTracking[]>([])
@@ -37,23 +39,28 @@ const itemsPerPage = ref(perPaged)
 const itemsLength = ref(0)
 
 const requestData = async (optionsRoute?: OptionsRoute | undefined) => {
-  loading.value = true
-  let queryString: any = ''
-  if (optionsRoute) {
-   
-    const url = buildQueryString(optionsRoute)
-    queryString = `?${url}`
-  }
 
-  const { data, totalItems } = await ofetch<RequestDataVehicleTracking>(`/TrackerOdometer${queryString}`, {
-    baseURL,
-    headers: {
-      Authorization: `Basic ${token}`
+  loading.value = true
+  try {
+    let queryString: any = ''
+    if (optionsRoute) {
+    
+      const url = buildQueryString(optionsRoute)
+      queryString = `?${url}`
     }
-  })
-  items.value = data
-  loading.value = false
-  itemsLength.value = totalItems
+
+    const { data, totalItems } = await ofetch<RequestDataVehicleTracking>(`/TrackerOdometer${queryString}`, {
+      baseURL,
+      headers: {
+        Authorization: `Basic ${token}`
+      }
+    })
+    items.value = data
+    loading.value = false
+    itemsLength.value = totalItems
+  } catch (error) {
+    errorModal.value = true
+  }
 }
 
 // fazer paginação funcionar
@@ -127,4 +134,5 @@ const resetValues = async () => {
   />
   <ModalConfiguration v-model:open="modalConfig" v-model:order="orderList" />
   <ModalFilter v-model:open="modalHodometer" @filter="filterData" />
+  <ErrorModal v-model="errorModal" />
 </template>

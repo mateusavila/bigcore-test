@@ -25,6 +25,7 @@ bun install
 Este projeto roda com um arquivo .env que possui duas chaves:
 
 VITE_TOKEN="ADICIONE O TOKEN AQUI"
+
 VITE_BASEURL="https://api-elog-client.azurewebsites.net/api/v1/Vehicles"
 
 ## Rodando o ambiente de desenvolvimento

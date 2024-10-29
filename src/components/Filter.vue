@@ -7,7 +7,7 @@ const emit = defineEmits<{
 
 const modalConfig = (): void => emit('config')
 const modalHodometer = (): void => emit('hodometer')
-const resetValues = () => emit('reset')
+const resetValues = (): void => emit('reset')
 </script>
 
 <template>

@@ -20,6 +20,13 @@ yarn install
 bun install
 ```
 
+## .env
+
+Este projeto roda com um arquivo .env que possui duas chaves:
+
+VITE_TOKEN="ADICIONE O TOKEN AQUI"
+VITE_BASEURL="https://api-elog-client.azurewebsites.net/api/v1/Vehicles"
+
 ## Rodando o ambiente de desenvolvimento
 
 Inicie o ambiente de desenvolvimento `http://localhost:5173`:

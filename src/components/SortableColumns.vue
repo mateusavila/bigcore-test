@@ -21,12 +21,15 @@ const model = defineModel<ColumnsVehicles[]>()
   </draggable>
 </template>
 
-<style lang="sass" scoped>
-.list-group
-  gap: 5px
-  display: flex
-  flex-wrap: wrap
-.v-list-item
-  width: 100%
-  font-size: 14px
+<style scoped>
+
+.list-group {
+  gap: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.v-list-item {
+  width: 100%;
+  font-size: 14px;
+}
 </style>

@@ -101,14 +101,16 @@ watch(() => idTms.value, (id) => updateIdTMS(id))
   </v-dialog>
 </template>
 
-<style lang="sass">
-.fields
-  display: flex
-  gap: 20px
-  flex-wrap: wrap
-  
-.field
-  width: 100%
-  &.half
-    width: calc(50% - 10px)
+<style>
+.fields {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.field {
+  width: 100%;
+  &.half {
+    width: calc(50% - 10px);
+  }
+}
 </style>

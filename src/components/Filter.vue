@@ -34,17 +34,20 @@ const resetValues = (): void => emit('reset')
   </div>
 </template>
 
-<style lang="sass">
-  .reset-values
-    display: flex
+<style>
+  .reset-values {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 120px;
+  }
+  .filter {
+    height: 60px;
+  }
+  .filter-flex.container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: center
-    gap: 10px
-    width: 120px
-  .filter
-    height: 60px
-  .filter-flex.container
-    height: 100%
-    display: flex
-    justify-content: space-between
-    align-items: center
+  }
 </style>

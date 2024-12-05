@@ -8,6 +8,11 @@ import ModalConfigScorecards from '../components/ModalConfigScorecards.vue'
 import { useConfigScorecards } from '../composables/useConfigScorecards'
 
 const toggle = ref<number[]>([])
+const toggle1 = ref<number[]>([])
+const toggle2 = ref<number[]>([])
+const toggle3 = ref<number[]>([])
+const toggle4 = ref<number[]>([])
+const toggle5 = ref<number[]>([])
 
 const { alertToggle,
     alertActivity,
@@ -18,8 +23,7 @@ const { alertToggle,
     limitVisibility,
     amountScorecards } = useConfigScorecards()
 
-
-const items = ref<ListScorecard[]>([
+const alerts = ref<ListScorecard[]>([
   {
     id: 1,
     text: '12.200 alertas',
@@ -56,6 +60,9 @@ const items = ref<ListScorecard[]>([
     icon: 'mdi-message',
     category: 'alerts'
   },
+])
+
+const availability = ref<ListScorecard[]>([
   {
     id: 5,
     text: '120 desconhecido',
@@ -92,6 +99,9 @@ const items = ref<ListScorecard[]>([
     icon: 'mdi-tow-truck',
     category: 'availability'
   },
+])
+
+const activities = ref<ListScorecard[]>([
   {
     id: 9,
     text: '662 operação',
@@ -155,57 +165,10 @@ const items = ref<ListScorecard[]>([
     icon: 'mdi-truck-snowflake',
     category: 'activities'
   },
-  {
-    id: 16,
-    text: '20 SP',
-    color: 'grey-darken-1',
-    activeColor: 'grey-darken-2',
-    value: '20',
-    icon: 'mdi-map',
-    category: 'states',
-    helper: 'SP'
-  },
-  {
-    id: 17,
-    text: '19 RS',
-    color: 'grey-darken-1',
-    activeColor: 'grey-darken-2',
-    value: '19',
-    icon: 'mdi-map',
-    category: 'states',
-    helper: 'RS'
-  },
-  {
-    id: 18,
-    text: '15 SC',
-    color: 'grey-darken-1',
-    activeColor: 'grey-darken-2',
-    value: '15',
-    icon: 'mdi-map',
-    category: 'states',
-    helper: 'SC'
-  },
-  {
-    id: 19,
-    text: '10 PR',
-    color: 'grey-darken-1',
-    activeColor: 'grey-darken-2',
-    value: '10',
-    icon: 'mdi-map',
-    category: 'states',
-    helper: 'RS'
-  },
-  {
-    id: 20,
-    text: '5 MG',
-    color: 'grey-darken-1',
-    activeColor: 'grey-darken-2',
-    value: '5',
-    icon: 'mdi-map',
-    category: 'states',
-    helper: 'MG'
-  },
-  {
+])
+
+const cities = ref<ListScorecard[]>([
+{
     id: 21,
     text: '5 Rio de Janeiro',
     color: 'grey-darken-1',
@@ -257,60 +220,70 @@ const items = ref<ListScorecard[]>([
   }
 ])
 
-const toggleItems = computed(() => {
-  const list = items.value.filter((item) => {
-    if (item.category === 'alerts' && alertToggle.value) {
-      return item.value
-    }
-    if (item.category === 'activities' && alertActivity.value) {
-      return item.value
-    }
-    if (item.category === 'availability' && alertAvailability.value) {
-      return item.value
-    }
-    if (item.category === 'cities' && alertCity.value) {
-      return item.value
-    }
-    if (item.category === 'states' && alertState.value) {
-      return item.value
-    }
-  })
-  return list.slice(0, limitVisibility.value ? amountScorecards.value : list.length)
-})
+const states = ref<ListScorecard[]>([
+  {
+    id: 16,
+    text: '20 SP',
+    color: 'grey-darken-1',
+    activeColor: 'grey-darken-2',
+    value: '20',
+    icon: 'mdi-map',
+    category: 'states',
+    helper: 'SP'
+  },
+  {
+    id: 17,
+    text: '19 RS',
+    color: 'grey-darken-1',
+    activeColor: 'grey-darken-2',
+    value: '19',
+    icon: 'mdi-map',
+    category: 'states',
+    helper: 'RS'
+  },
+  {
+    id: 18,
+    text: '15 SC',
+    color: 'grey-darken-1',
+    activeColor: 'grey-darken-2',
+    value: '15',
+    icon: 'mdi-map',
+    category: 'states',
+    helper: 'SC'
+  },
+  {
+    id: 19,
+    text: '10 PR',
+    color: 'grey-darken-1',
+    activeColor: 'grey-darken-2',
+    value: '10',
+    icon: 'mdi-map',
+    category: 'states',
+    helper: 'RS'
+  },
+  {
+    id: 20,
+    text: '5 MG',
+    color: 'grey-darken-1',
+    activeColor: 'grey-darken-2',
+    value: '5',
+    icon: 'mdi-map',
+    category: 'states',
+    helper: 'MG'
+  }
+])
 
-const toggleItemsFull = computed(() => {
-  const list = items.value.filter((item) => {
-    if (item.category === 'alerts' && alertToggle.value) {
-      return item.value
-    }
-    if (item.category === 'activities' && alertActivity.value) {
-      return item.value
-    }
-    if (item.category === 'availability' && alertAvailability.value) {
-      return item.value
-    }
-    if (item.category === 'states' && alertState.value) {
-      return item.value
-    }
-    if (item.category === 'cities' && alertCity.value) {
-      return item.value
-    }
-  })
-  return list
-})
-
-const applyColors = (value: number, color: string) => toggle.value.includes(value) ? '#fff' : color  
+const applyColors = (value: number, color: string, model: any) => {
+  const array = [model]
+  array.includes(value) ? '#fff' : color
+}  
 
 const modal = ref<boolean>(false)
 const configScorecard = ref<boolean>(false)
 const openModal = () => modal.value = true
 const updateConfigScorecard = () => configScorecard.value = true
 
-watch(() => limitVisibility.value, (limit) => {
-  if (limit) {
-    amountScorecards.value = toggleItems.value.length
-  }
-})
+const toggleItemsFull = computed(() => [...alerts.value, ...activities.value, ...availability.value, ...states.value, ...cities.value])
 
 const showFirst3Letters = (city: string) => city.length > 3 ? city.substring(0, 3) : city
 
@@ -332,10 +305,11 @@ const filterData = (data: HandleFilterConfig) => {
     <CardTitle>Proposta de melhoria em Scorecards</CardTitle>
     <v-btn @click="updateConfigScorecard">Configurar Scorecards</v-btn>
     <div class="box">
-      <v-btn-toggle multiple density="compact" v-model="toggle">
-        <v-btn :active-color v-for="{id, text, icon, activeColor, color, value, helper}, key in toggleItems" :key :value="id">
+      <template v-if="limitVisibility">
+        <v-btn-toggle multiple density="compact" v-model="toggle">
+        <v-btn :active-color v-for="{id, text, icon, activeColor, color, value, helper}, key in alerts" :key :value="id">
           <v-tooltip :text activator="parent" location="top" />
-          <v-icon :icon :size="!hideNumbers ? 'small' : 'large'" :color="applyColors(id, color)" />
+          <v-icon :icon :size="!hideNumbers ? 'small' : 'large'" :color="applyColors(id, color, toggle)" />
           <span v-if="!hideNumbers" class="button-info"><span class="helper" v-if="helper">{{showFirst3Letters(helper)}}</span> {{ value }}</span>
         </v-btn>
         <v-btn :value="0" v-if="limitVisibility" @click="openModal">
@@ -343,6 +317,79 @@ const filterData = (data: HandleFilterConfig) => {
           <v-icon icon="mdi-plus-box" size="large" />
         </v-btn>
       </v-btn-toggle>
+      </template>
+      <template  v-if="!limitVisibility">
+        <div class="box-item">
+          <p>Notificações</p>
+          <v-btn-toggle multiple density="compact" v-model="toggle">
+            <v-btn :active-color v-for="{id, text, icon, activeColor, color, value, helper}, key in alerts" :key :value="id">
+              <v-tooltip :text activator="parent" location="top" />
+              <v-icon :icon :size="!hideNumbers ? 'small' : 'large'" :color="applyColors(id, color, toggle)" />
+              <span v-if="!hideNumbers" class="button-info"><span class="helper" v-if="helper">{{showFirst3Letters(helper)}}</span> {{ value }}</span>
+            </v-btn>
+            <v-btn :value="0" v-if="limitVisibility" @click="openModal">
+              <v-tooltip text="Clique para ver todos" activator="parent" location="top" />
+              <v-icon icon="mdi-plus-box" size="large" />
+            </v-btn>
+          </v-btn-toggle>
+        </div>
+        <div class="box-item">
+          <p>Atividades</p>
+          <v-btn-toggle multiple density="compact" v-model="toggle1">
+            <v-btn :active-color v-for="{id, text, icon, activeColor, color, value, helper}, key in activities" :key :value="id">
+              <v-tooltip :text activator="parent" location="top" />
+              <v-icon :icon :size="!hideNumbers ? 'small' : 'large'" :color="applyColors(id, color, toggle1)" />
+              <span v-if="!hideNumbers" class="button-info"><span class="helper" v-if="helper">{{showFirst3Letters(helper)}}</span> {{ value }}</span>
+            </v-btn>
+            <v-btn :value="0" v-if="limitVisibility" @click="openModal">
+              <v-tooltip text="Clique para ver todos" activator="parent" location="top" />
+              <v-icon icon="mdi-plus-box" size="large" />
+            </v-btn>
+          </v-btn-toggle>
+        </div>
+        <div class="box-item">
+          <p>Disponibilidade</p>
+          <v-btn-toggle multiple density="compact" v-model="toggle2">
+            <v-btn :active-color v-for="{id, text, icon, activeColor, color, value, helper}, key in availability" :key :value="id">
+              <v-tooltip :text activator="parent" location="top" />
+              <v-icon :icon :size="!hideNumbers ? 'small' : 'large'" :color="applyColors(id, color, toggle2)" />
+              <span v-if="!hideNumbers" class="button-info"><span class="helper" v-if="helper">{{showFirst3Letters(helper)}}</span> {{ value }}</span>
+            </v-btn>
+            <v-btn :value="0" v-if="limitVisibility" @click="openModal">
+              <v-tooltip text="Clique para ver todos" activator="parent" location="top" />
+              <v-icon icon="mdi-plus-box" size="large" />
+            </v-btn>
+          </v-btn-toggle>
+        </div>
+        <div class="box-item">
+          <p>Estados</p>
+          <v-btn-toggle multiple density="compact" v-model="toggle5">
+            <v-btn :active-color v-for="{id, text, icon, activeColor, color, value, helper}, key in states" :key :value="id">
+              <v-tooltip :text activator="parent" location="top" />
+              <v-icon :icon :size="!hideNumbers ? 'small' : 'large'" :color="applyColors(id, color, toggle5)" />
+              <span v-if="!hideNumbers" class="button-info"><span class="helper" v-if="helper">{{showFirst3Letters(helper)}}</span> {{ value }}</span>
+            </v-btn>
+            <v-btn :value="0" v-if="limitVisibility" @click="openModal">
+              <v-tooltip text="Clique para ver todos" activator="parent" location="top" />
+              <v-icon icon="mdi-plus-box" size="large" />
+            </v-btn>
+          </v-btn-toggle>
+        </div>
+        <div class="box-item">
+          <p>Cidades</p>
+          <v-btn-toggle multiple density="compact" v-model="toggle4">
+            <v-btn :active-color v-for="{id, text, icon, activeColor, color, value, helper}, key in cities" :key :value="id">
+              <v-tooltip :text activator="parent" location="top" />
+              <v-icon :icon :size="!hideNumbers ? 'small' : 'large'" :color="applyColors(id, color, toggle4)" />
+              <span v-if="!hideNumbers" class="button-info"><span class="helper" v-if="helper">{{showFirst3Letters(helper)}}</span> {{ value }}</span>
+            </v-btn>
+            <v-btn :value="0" v-if="limitVisibility" @click="openModal">
+              <v-tooltip text="Clique para ver todos" activator="parent" location="top" />
+              <v-icon icon="mdi-plus-box" size="large" />
+            </v-btn>
+          </v-btn-toggle>
+        </div>
+    </template>
     </div>
     <CardSubTitle>Atribuindo grau de relevância</CardSubTitle>
     <p>Os alertas precisam ser atribuídos com grau de relevância. A tabela a seguir propôe uma subdivisão.</p>
@@ -393,8 +440,17 @@ const filterData = (data: HandleFilterConfig) => {
   margin: 30px 0;
   width: 100%;
   background: #fafafa;
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  flex-wrap: nowrap; /* Garante que os filhos fiquem em uma linha */
   padding: 20px;
+  overflow-x: auto; /* Adiciona o scroll horizontal */
+  overflow-y: hidden; /* Remove o scroll vertical */
   border: 1px solid #dedede;
+
+  /* Tornando o scrollbar invisível */
+  scrollbar-width: none; /* Firefox */
   .v-btn-group {
     overflow: auto;
     scrollbar-width: none;
@@ -402,6 +458,9 @@ const filterData = (data: HandleFilterConfig) => {
   .v-btn-group::-webkit-scrollbar {
     display: none;
   } 
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari e Edge */
+  }
 }
 .helper {
   overflow: hidden;
@@ -420,6 +479,12 @@ const filterData = (data: HandleFilterConfig) => {
   td, th {
     padding: 5px;
     border: 1px solid #ccc;
+  }
+}
+.box-item {
+  p {
+    font-size: 13px;
+    font-weight: bold;
   }
 }
 </style>

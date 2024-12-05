@@ -272,7 +272,7 @@ const states = ref<ListScorecard[]>([
   }
 ])
 
-const applyColors = (value: number, color: string, model: any) => {
+const applyColors = (value: number, color: string, model: any): any => {
   const array = [model]
   array.includes(value) ? '#fff' : color
 }  

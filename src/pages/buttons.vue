@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import CardTitle from '../components/CardTitle.vue'
 import CardSubTitle from '../components/CardSubTitle.vue'
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import ModalScorecards from '../components/ModalScorecards.vue'
 import { HandleFilterConfig, ListScorecard } from '../types'
 import ModalConfigScorecards from '../components/ModalConfigScorecards.vue'
@@ -10,7 +10,6 @@ import { useConfigScorecards } from '../composables/useConfigScorecards'
 const toggle = ref<number[]>([])
 const toggle1 = ref<number[]>([])
 const toggle2 = ref<number[]>([])
-const toggle3 = ref<number[]>([])
 const toggle4 = ref<number[]>([])
 const toggle5 = ref<number[]>([])
 

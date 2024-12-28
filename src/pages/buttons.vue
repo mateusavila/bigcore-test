@@ -10,6 +10,7 @@ import { useConfigScorecards } from '../composables/useConfigScorecards'
 const toggle = ref<number[]>([])
 const toggle1 = ref<number[]>([])
 const toggle2 = ref<number[]>([])
+const toggle3 = ref<number[]>([])
 const toggle4 = ref<number[]>([])
 const toggle5 = ref<number[]>([])
 
@@ -166,8 +167,47 @@ const activities = ref<ListScorecard[]>([
   },
 ])
 
+const etas = ref<ListScorecard[]>([
+  {
+    id: 26,
+    text: '22 Com atraso',
+    color: 'red-darken-1',
+    activeColor: 'grey-darken-1',
+    value: '22',
+    icon: 'mdi-truck-remove-outline',
+    category: 'eta'
+  },
+  {
+    id: 27,
+    text: '1 Atrasando',
+    color: 'orange-darken-1',
+    activeColor: 'grey-darken-1',
+    value: '1',
+    icon: 'mdi-truck-alert-outline',
+    category: 'eta'
+  },
+  {
+    id: 28,
+    text: '220 Normal',
+    color: 'red-darken-1',
+    activeColor: 'blue-darken-1',
+    value: '220',
+    icon: 'mdi-truck-outline',
+    category: 'eta'
+  },
+  {
+    id: 29,
+    text: '399 Finalizado',
+    color: 'red-darken-1',
+    activeColor: 'green-darken-1',
+    value: '399',
+    icon: 'mdi-truck-check-outline',
+    category: 'eta'
+  },
+])
+
 const cities = ref<ListScorecard[]>([
-{
+  {
     id: 21,
     text: '5 Rio de Janeiro',
     color: 'grey-darken-1',
@@ -388,47 +428,22 @@ const filterData = (data: HandleFilterConfig) => {
             </v-btn>
           </v-btn-toggle>
         </div>
+        <div class="box-item">
+          <p>ETAs</p>
+          <v-btn-toggle multiple density="compact" v-model="toggle3">
+            <v-btn :active-color v-for="{id, text, icon, activeColor, color, value, helper}, key in etas" :key :value="id">
+              <v-tooltip :text activator="parent" location="top" />
+              <v-icon :icon :size="!hideNumbers ? 'small' : 'large'" :color="applyColors(id, color, toggle5)" />
+              <span v-if="!hideNumbers" class="button-info"><span class="helper" v-if="helper">{{showFirst3Letters(helper)}}</span> {{ value }}</span>
+            </v-btn>
+            <v-btn :value="0" v-if="limitVisibility" @click="openModal">
+              <v-tooltip text="Clique para ver todos" activator="parent" location="top" />
+              <v-icon icon="mdi-plus-box" size="large" />
+            </v-btn>
+          </v-btn-toggle>
+        </div>
     </template>
     </div>
-    <CardSubTitle>Atribuindo grau de relevância</CardSubTitle>
-    <p>Os alertas precisam ser atribuídos com grau de relevância. A tabela a seguir propôe uma subdivisão.</p>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Cor</th>
-          <th>Grau</th>
-          <th>Descrição</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="background-color:rgb(229, 57, 53)"></td>
-          <td>Alerta</td>
-          <td>Indicado para atividades que requerem controle ágil e imediato.</td>
-        </tr>
-        <tr>
-          <td style="background-color:#ef6c00"></td>
-          <td>Infração</td>
-          <td>Indicado para atividades importantes, porém em menor grau.</td>
-        </tr>
-        <tr>
-          <td style="background-color:rgb(0, 151, 167)"></td>
-          <td>Macro</td>
-          <td>Indicado para as macros.</td>
-        </tr>
-        <tr>
-          <td style="background-color:rgb(0, 137, 123)"></td>
-          <td>Mensagem</td>
-          <td>Indicado para mensagens.</td>
-        </tr>
-        <tr>
-          <td style="background-color:rgb(117, 117, 117)"></td>
-          <td>Neutro</td>
-          <td>Indica um scorecard com valor neutro</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
   <ModalScorecards v-model="modal" :list="toggleItemsFull" />
   <ModalConfigScorecards v-model="configScorecard" :list="toggleItemsFull" @filter="filterData" />

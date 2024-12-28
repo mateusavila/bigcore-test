@@ -95,7 +95,13 @@ export interface ListScorecard {
   value: string;
   icon: string;
   helper?: string;
-  category: "alerts" | "activities" | "availability" | "states" | "cities";
+  category:
+    | "alerts"
+    | "activities"
+    | "availability"
+    | "states"
+    | "cities"
+    | "eta";
 }
 
 export interface HandleFilterConfig {

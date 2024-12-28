@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import CardTitle from '../components/CardTitle.vue'
-import CardSubTitle from '../components/CardSubTitle.vue'
 import { ref, computed } from 'vue'
 import ModalScorecards from '../components/ModalScorecards.vue'
 import { HandleFilterConfig, ListScorecard } from '../types'
